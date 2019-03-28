@@ -8,23 +8,28 @@ Elm/Elchemy Language Web Interface for Server
 The ELWIS specification consists of headers, requests, responses, apps, and middleware.  Below are examples of each.
 
 **ELWIS requests**.
-
     {server_port = "80",
      server_name = "127.0.0.1",
      remote_addr = "127.0.0.1",
      uri = "/",
      scheme = "http",
+     query_string = "",
      method= "get",
+     content_type = "",
+     content_length = 0,
+     character_encoding = "",
+     body = "",
      headers:
-       {accept_charset = "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
-        connection = "keep-alive",
-        host = "localhost:8000",
-        ...}}
+       `[accept_charset "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+        connection "keep-alive",
+        host "localhost:8000",
+        ]`
+     }
 
 **ELWIS responses**.
 
     {status: 200,
-     headers = {content_type = "text/plain"},
+     headers = [content_type "text/plain"],
      body: "Hello!"}
 
 **ELWIS apps**.
@@ -44,7 +49,7 @@ The ELWIS specification consists of headers, requests, responses, apps, and midd
         let resp = app req
         in
         { status: resp.status
-        , headers = {resp| content_type = "text/html" }
+        , headers = updateHeaders resp.headers (content_type "text/html")
         , body = resp.body
         }
 
