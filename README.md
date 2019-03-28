@@ -8,6 +8,7 @@ Elm/Elchemy Language Web Interface for Server
 The ELWIS specification consists of headers, requests, responses, apps, and middleware.  Below are examples of each.
 
 **ELWIS requests**.
+    
     {server_port = "80",
      server_name = "127.0.0.1",
      remote_addr = "127.0.0.1",
@@ -36,10 +37,10 @@ The ELWIS specification consists of headers, requests, responses, apps, and midd
 
     app req = 
         if req.uri == "/favicon.ico" then
-            {status = 404, headers = {}, body = "Not Found"}
+            {status = 404, headers = [], body = "Not Found"}
         else
             { status = 200
-            , headers = {content_type = "text/html"}
+            , headers = [(content_type "text/html")]
             , body = "<h1>Hello!</h1>"
             }
             
