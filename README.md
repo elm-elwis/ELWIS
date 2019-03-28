@@ -21,10 +21,10 @@ The ELWIS specification consists of headers, requests, responses, apps, and midd
      character_encoding = "",
      body = "",
      headers:
-       \[accept_charset "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+       [accept_charset "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
         connection "keep-alive",
         host "localhost:8000",
-        \]
+        ]
      }
 
 **ELWIS responses**.
