@@ -21,10 +21,10 @@ The ELWIS specification consists of headers, requests, responses, apps, and midd
      character_encoding = "",
      body = "",
      headers:
-       `[accept_charset "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+       \[accept_charset "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
         connection "keep-alive",
         host "localhost:8000",
-        ]`
+        \]
      }
 
 **ELWIS responses**.
@@ -40,18 +40,18 @@ The ELWIS specification consists of headers, requests, responses, apps, and midd
             {status = 404, headers = [], body = "Not Found"}
         else
             { status = 200
-            , headers = [(content_type "text/html")]
+            , headers = [content_type "text/html"]
             , body = "<h1>Hello!</h1>"
             }
             
 **ELWIS middleware**.
     
-    wrap_as_html app req = 
+    wrap_as_upcase app req = 
         let resp = app req
         in
         { status: resp.status
-        , headers = updateHeaders resp.headers (content_type "text/html")
-        , body = resp.body
+        , headers = resp.headers
+        , body = String.toUpper resp.body -- just demonstrating the use with silly case
         }
 
 For the detailed specification, see [`SPEC.md`](http://github.com/elm-elwis/elwis/spec.md).
