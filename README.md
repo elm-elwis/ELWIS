@@ -9,45 +9,46 @@ The ELWIS specification consists of headers, requests, responses, apps, and midd
 
 **ELWIS requests**.
 
-    {"server_port": "80",
-     "server_name": "127.0.0.1",
-     "remote_addr": "127.0.0.1",
-     "uri": "/",
-     "scheme": "http",
-     "method": "get",
-     "headers":
-       {"accept_charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
-        "connection": "keep-alive",
-        "host": "localhost:8000",
+    {server_port = "80",
+     server_name = "127.0.0.1",
+     remote_addr = "127.0.0.1",
+     uri = "/",
+     scheme = "http",
+     method= "get",
+     headers:
+       {accept_charset = "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+        connection = "keep-alive",
+        host = "localhost:8000",
         ...}}
 
 **ELWIS responses**.
 
-    {"status": 200,
-     "headers": {"content_type": "text/plain"},
-     "body": "Hello!"}
+    {status: 200,
+     headers = {content_type = "text/plain"},
+     body: "Hello!"}
 
 **ELWIS apps**.
 
-    def app(req):
-      if req["uri"] == "/favicon.ico":
-        return {"status": 404, headers: {}, body: "Not Found"}
-      return {"status": 200,
-              "headers": {"content_type": "text/html"},
-              "body": "<h1>Hello!</h1>"}
-
+    app req = 
+        if req.uri == "/favicon.ico" then
+            {status = 404, headers = {}, body = "Not Found"}
+        else
+            { status = 200
+            , headers = {content_type = "text/html"}
+            , body = "<h1>Hello!</h1>"
+            }
+            
 **ELWIS middleware**.
+    
+    wrap_as_html app req = 
+        let resp = app req
+        in
+        { status: resp.status
+        , headers = {resp| content_type = "text/html" }
+        , body = resp.body
+        }
 
-    def wrap_with_logger(app):
-      def wrapped(req):
-        response = app(req)
-        print "%s %s\n  => %s" % (req["method"],
-                                  req["uri"],
-                                  response)
-        return response
-      return wrapped
-
-For the detailed specification, see [`SPEC.md`](http://adeel.github.com/elm-elwis/spec.html).
+For the detailed specification, see [`SPEC.md`](http://github.com/elm-elwis/elwis/spec.md).
 
 ## Getting started
 
